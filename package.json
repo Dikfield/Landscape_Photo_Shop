@@ -1,0 +1,59 @@
+{
+  "name": "landscape",
+  "version": "1.0.0",
+  "description": "E-Commerce for landscape photos",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "server": "npx nodemon",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client",
+    "data:import": "node --loader ts-node/esm backend/seeder.ts",
+    "data:destroy": "node --loader ts-node/esm backend/seeder.ts -d"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dikfield/Landscape_Photo_Shop.git"
+  },
+  "author": "Diogo Cortez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dikfield/Landscape_Photo_Shop/issues"
+  },
+  "homepage": "https://github.com/Dikfield/Landscape_Photo_Shop#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.2.3",
+    "concurrently": "^8.0.1",
+    "nodemon": "^2.0.22",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@octokit/rest": "^19.0.11",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/config": "^3.3.0",
+    "@types/cors": "^2.8.13",
+    "@types/gravatar": "^1.8.3",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/request": "^2.48.8",
+    "@typescript-eslint/eslint-plugin": "^5.59.9",
+    "@typescript-eslint/parser": "^5.59.9",
+    "axios": "^1.4.0",
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "config": "^3.3.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "eslint": "^8.42.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "gravatar": "^1.8.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.2.0",
+    "prettier": "^2.8.8",
+    "request": "^2.88.2",
+    "ts-node": "^10.9.1"
+  }
+}
