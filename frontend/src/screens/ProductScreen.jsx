@@ -31,6 +31,10 @@ const ProductScreen = () => {
         <div>{error?.data?.message || error.error}</div>
       ) : (
         <>
+          <Row
+            title={product.name}
+            description={product.description}
+          />
           <Row>
             <Col md={5}>
               <Image

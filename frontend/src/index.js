@@ -23,12 +23,11 @@ const router = createBrowserRouter(
         index={true}
         path="/"
         element={<HomeScreen />}
-      ></Route>
+      />
       <Route
-        index={true}
         path="/product/:id"
         element={<ProductScreen />}
-      ></Route>
+      />
     </Route>,
   ),
 );
