@@ -4,11 +4,8 @@ import cookieParser from 'cookie-parser';
 import userRoutes from './routes/userRoutes';
 import orderRoutes from './routes/orderRoutes';
 import connectDB from './data/db';
-import {
-  notFound,
-  errorHandler,
-} from './middleware/errorMiddleware';
 import { config } from './config/config';
+import { notFound, errorHandler } from './middleware/errorMiddleware';
 
 const port = config.PORT || 8000;
 
@@ -29,9 +26,11 @@ app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
 
+app.get('/api/config/paypal', (req, res) =>
+  res.send({ clientId: config.PAYPAL_CLIENT_ID }),
+);
+
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(port, () =>
-  console.log(`Server running on port ${port}`),
-);
+app.listen(port, () => console.log(`Server running on port ${port}`));
