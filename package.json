@@ -36,6 +36,7 @@
     "@types/cors": "^2.8.13",
     "@types/gravatar": "^1.8.3",
     "@types/jsonwebtoken": "^9.0.2",
+    "@types/multer": "^1.4.7",
     "@types/request": "^2.48.8",
     "@typescript-eslint/eslint-plugin": "^5.59.9",
     "@typescript-eslint/parser": "^5.59.9",
@@ -54,6 +55,7 @@
     "gravatar": "^1.8.2",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.2.0",
+    "multer": "^1.4.5-lts.1",
     "prettier": "^2.8.8",
     "request": "^2.88.2",
     "ts-node": "^10.9.1"
