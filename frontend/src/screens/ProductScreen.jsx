@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Meta from '../components/Meta';
 import Loader from '../components/Loader';
 import {
   Row,
@@ -78,7 +79,7 @@ const ProductScreen = () => {
         </Message>
       ) : (
         <>
-          <Row title={product.name} description={product.description} />
+          <Meta title={product.name} description={product.description} />
           <Row>
             <Col md={5}>
               <Image src={product.image} alt={product.name} fluid></Image>

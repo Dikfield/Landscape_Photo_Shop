@@ -1,8 +1,9 @@
 import asyncHandler from '../middleware/asyncHandler';
 import Product from '../models/productModel';
+import { config } from '../config/config';
 
 const getProducts = asyncHandler(async (req: any, res: any) => {
-  const pageSize = 4;
+  const pageSize = config.PAGINATION_LIMIT;
   const page = Number(req.query.pageNumber) || 1;
 
   const keyword = req.query.keyword

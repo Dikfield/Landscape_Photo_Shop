@@ -12,6 +12,7 @@ class Config {
   DATABASE_PASSWORD: string | undefined;
   JWT_SECRET: string | undefined;
   PAYPAL_CLIENT_ID: string | undefined;
+  PAGINATION_LIMIT: number;
 
   constructor() {
     this.PORT = process.env.PORT || '';
@@ -20,6 +21,9 @@ class Config {
     this.DATABASE_PASSWORD = process.env.DATABASE_PASSWORD || '';
     this.JWT_SECRET = process.env.JWT_SECRET || '';
     this.PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID || '';
+    this.PAGINATION_LIMIT = process.env.PAGINATION_LIMIT
+      ? Number(process.env.PAGINATION_LIMIT)
+      : 2;
   }
 
   public validationConfig(): void {
