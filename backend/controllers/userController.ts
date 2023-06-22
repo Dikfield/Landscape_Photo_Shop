@@ -40,7 +40,10 @@ const registerUser = asyncHandler(async (req: any, res: any) => {
     throw new Error('User already exists');
   }
 
-  const emailToken = jwt.sign({ email }, config.NODEMAIL_EMAIL_SECRET as string);
+  const emailToken = jwt.sign(
+    { email },
+    config.NODEMAIL_EMAIL_SECRET as string,
+  );
 
   const user = await UserModel.create({
     name,
@@ -51,8 +54,7 @@ const registerUser = asyncHandler(async (req: any, res: any) => {
 
   if (user) {
     generateToken(res, user._id);
-    sendConfirmationEmail(user.name, user.email, emailToken);
-    console.log(emailToken);
+    await sendConfirmationEmail(user.name, user.email, emailToken);
     res.status(201).json({
       message: 'User was registered successfully! please check your email',
       _id: user._id,
