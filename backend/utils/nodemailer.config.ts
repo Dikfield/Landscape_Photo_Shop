@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 import { config } from '../config/config';
 
-const user = config.NODEMAIL_MAIL as string;
+const user = config.NODEMAIL_EMAIL as string;
 const pass = config.NODEMAIL_PASS as string;
 
 const transport = nodemailer.createTransport({

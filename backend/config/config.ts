@@ -16,7 +16,7 @@ class Config {
   EMAIL_SECRET: string | undefined;
   NODEMAIL_CLIENT_ID: string | undefined;
   NODEMAIL_CLIENT_SECRET: string | undefined;
-  NODEMAIL_MAIL: string | undefined;
+  NODEMAIL_EMAIL: string | undefined;
   NODEMAIL_PASS: string | undefined;
   NODEMAIL_EMAIL_SECRET: string | undefined;
 
@@ -33,7 +33,7 @@ class Config {
     this.EMAIL_SECRET = process.env.EMAIL_SECRET || '';
     this.NODEMAIL_CLIENT_ID = process.env.NODEMAIL_CLI || '';
     this.NODEMAIL_CLIENT_SECRET = process.env.NODEMAIL_CLIENT_SECRET || '';
-    this.NODEMAIL_MAIL = process.env.NODEMAIL_MAIL || '';
+    this.NODEMAIL_EMAIL = process.env.NODEMAIL_EMAIL || '';
     this.NODEMAIL_PASS = process.env.NODEMAIL_PASS || '';
     this.NODEMAIL_EMAIL_SECRET = process.env.NODEMAIL_EMAIL_SECRET || '';
   }
