@@ -40,7 +40,7 @@ const registerUser = asyncHandler(async (req: any, res: any) => {
     throw new Error('User already exists');
   }
 
-  const emailToken = jwt.sign({ email }, config.EMAIL_SECRET as string);
+  const emailToken = jwt.sign({ email }, config.NODEMAIL_EMAIL_SECRET as string);
 
   const user = await UserModel.create({
     name,

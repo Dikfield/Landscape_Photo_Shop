@@ -18,6 +18,7 @@ class Config {
   NODEMAIL_CLIENT_SECRET: string | undefined;
   NODEMAIL_MAIL: string | undefined;
   NODEMAIL_PASS: string | undefined;
+  NODEMAIL_EMAIL_SECRET: string | undefined;
 
   constructor() {
     this.PORT = process.env.PORT || '';
@@ -30,10 +31,11 @@ class Config {
       ? Number(process.env.PAGINATION_LIMIT)
       : 2;
     this.EMAIL_SECRET = process.env.EMAIL_SECRET || '';
-    this.NODEMAIL_CLIENT_ID= process.env.NODEMAIL_CLI || '';
-    this.NODEMAIL_CLIENT_SECRET= process.env.NODEMAIL_CLIENT_SECRET || '';
+    this.NODEMAIL_CLIENT_ID = process.env.NODEMAIL_CLI || '';
+    this.NODEMAIL_CLIENT_SECRET = process.env.NODEMAIL_CLIENT_SECRET || '';
     this.NODEMAIL_MAIL = process.env.NODEMAIL_MAIL || '';
     this.NODEMAIL_PASS = process.env.NODEMAIL_PASS || '';
+    this.NODEMAIL_EMAIL_SECRET = process.env.NODEMAIL_EMAIL_SECRET || '';
   }
 
   public validationConfig(): void {
