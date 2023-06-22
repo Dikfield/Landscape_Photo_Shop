@@ -6,6 +6,8 @@ interface IUserDocument extends Document {
   email: string;
   password: string;
   isAdmin: boolean;
+  status: string;
+  confirmationCode: string;
 }
 
 export interface IUser extends IUserDocument {
@@ -31,6 +33,15 @@ const userSchema = new Schema<IUser, IUserDocument>(
       type: Boolean,
       Required: true,
       default: false,
+    },
+    status: {
+      type: String,
+      enum: ['Pending', 'Active'],
+      default: 'Pending',
+    },
+    confirmationCode: {
+      type: String,
+      unique: true,
     },
   },
   {

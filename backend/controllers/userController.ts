@@ -1,6 +1,9 @@
+import jwt from 'jsonwebtoken';
 import asyncHandler from '../middleware/asyncHandler';
 import UserModel from '../models/userModel';
 import generateToken from '../utils/generateToken';
+import { config } from '../config/config';
+import { sendConfirmationEmail } from '../utils/nodemailer.config';
 
 const authUser = asyncHandler(async (req: any, res: any) => {
   const { email, password } = req.body;
@@ -8,6 +11,11 @@ const authUser = asyncHandler(async (req: any, res: any) => {
   const user = await UserModel.findOne({ email });
 
   if (user && (await user.matchPassword(password))) {
+    if (user.status !== 'Active') {
+      return res.status(401).send({
+        message: 'Pending account. Please verify your email',
+      });
+    }
     generateToken(res, user._id);
 
     res.status(200).json({
@@ -32,19 +40,26 @@ const registerUser = asyncHandler(async (req: any, res: any) => {
     throw new Error('User already exists');
   }
 
+  const emailToken = jwt.sign({ email }, config.EMAIL_SECRET as string);
+
   const user = await UserModel.create({
     name,
     email,
     password,
+    confirmationCode: emailToken,
   });
 
   if (user) {
     generateToken(res, user._id);
+    sendConfirmationEmail(user.name, user.email, emailToken);
+    console.log(emailToken);
     res.status(201).json({
+      message: 'User was registered successfully! please check your email',
       _id: user._id,
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      status: 'Pending',
     });
   } else {
     res.status(400);
@@ -157,6 +172,21 @@ const updateUser = asyncHandler(async (req: any, res: any) => {
   }
 });
 
+const userVerification = asyncHandler(async (req: any, res: any) => {
+  const user = await UserModel.findOne({
+    confirmationCode: req.params.confirmationCode,
+  });
+
+  if (user) {
+    user.status = 'Active';
+    await user.save();
+
+    return res.status(200).json({ message: 'User registrated' });
+  }
+
+  res.status(404).json({ message: 'Code not found' });
+});
+
 export {
   authUser,
   registerUser,
@@ -167,4 +197,5 @@ export {
   deleteUser,
   getUserById,
   updateUser,
+  userVerification,
 };

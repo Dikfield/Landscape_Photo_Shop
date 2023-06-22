@@ -9,6 +9,7 @@ import {
   deleteUser,
   getUserById,
   updateUser,
+  userVerification,
 } from '../controllers/userController';
 import { protect, admin } from '../middleware/authMiddleware';
 
@@ -26,5 +27,7 @@ router
   .delete(protect, admin, deleteUser)
   .get(protect, admin, getUserById)
   .put(protect, admin, updateUser);
+
+router.get('/confirmation/:confirmationCode', userVerification);
 
 export default router;

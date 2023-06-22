@@ -13,6 +13,11 @@ class Config {
   JWT_SECRET: string | undefined;
   PAYPAL_CLIENT_ID: string | undefined;
   PAGINATION_LIMIT: number;
+  EMAIL_SECRET: string | undefined;
+  NODEMAIL_CLIENT_ID: string | undefined;
+  NODEMAIL_CLIENT_SECRET: string | undefined;
+  NODEMAIL_MAIL: string | undefined;
+  NODEMAIL_PASS: string | undefined;
 
   constructor() {
     this.PORT = process.env.PORT || '';
@@ -24,6 +29,11 @@ class Config {
     this.PAGINATION_LIMIT = process.env.PAGINATION_LIMIT
       ? Number(process.env.PAGINATION_LIMIT)
       : 2;
+    this.EMAIL_SECRET = process.env.EMAIL_SECRET || '';
+    this.NODEMAIL_CLIENT_ID= process.env.NODEMAIL_CLI || '';
+    this.NODEMAIL_CLIENT_SECRET= process.env.NODEMAIL_CLIENT_SECRET || '';
+    this.NODEMAIL_MAIL = process.env.NODEMAIL_MAIL || '';
+    this.NODEMAIL_PASS = process.env.NODEMAIL_PASS || '';
   }
 
   public validationConfig(): void {
