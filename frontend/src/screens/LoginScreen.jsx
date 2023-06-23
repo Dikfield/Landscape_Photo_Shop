@@ -31,6 +31,8 @@ export const LoginScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    setEmail('');
+    setPassword('');
     try {
       const res = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...res }));

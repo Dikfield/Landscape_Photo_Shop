@@ -32,6 +32,8 @@ import ProductListScreen from './screens/admin/ProductListScreen';
 import ProductEditScreen from './screens/admin/ProductEditScreen';
 import UserListScreen from './screens/admin/UserListScreen';
 import UserEditScreen from './screens/admin/UserEditScreen';
+import EmailConfirmationScreen from './screens/EmailConfirmationScreen';
+import EmailNoteScreen from './screens/EmailNoteScreen';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -41,6 +43,8 @@ const router = createBrowserRouter(
       <Route path="/page/:pageNumber" element={<HomeScreen />} />
       <Route path="search/:keyword/page/:pageNumber" element={<HomeScreen />} />
       <Route path="/product/:id" element={<ProductScreen />} />
+      <Route path="/users/confirmation/:confirmationCode" element={<EmailConfirmationScreen />} />
+      <Route path="/users/confirmation/" element={<EmailNoteScreen />} />
 
       <Route path="/cart" element={<CartScreen />} />
       <Route path="/login" element={<LoginScreen />} />

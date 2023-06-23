@@ -21,15 +21,21 @@ export const sendConfirmationEmail = async (
 ) => {
   console.log('Check');
 
-  await transport
-    .sendMail({
-      from: user,
-      to: email,
-      subject: 'Please confirm your account',
-      html: `<h1>Email Confirmation</h1>
+  if (config.NODE_ENV === 'production') {
+    const url = `https://landscapeshop.onrender.com/users/confirmation/${confirmationCode}`;
+
+    await transport
+      .sendMail({
+        from: user,
+        to: email,
+        subject: 'Please confirm your account',
+        html: `<h1>Email Confirmation</h1>
     <h2>Hello ${name} </h2>
     <p> Thank you for subscribing. Please confirm your email by clicking on the following link </p>
-    <a href=http://localhost:5000/confirm/${confirmationCode}> Click here </a> </div>`,
-    })
-    .catch((err) => console.log(err));
+    <a href=${url}> Click here </a> </div>`,
+      })
+      .catch((err) => console.log(err));
+  } else {
+    console.log(confirmationCode);
+  }
 };

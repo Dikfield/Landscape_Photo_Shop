@@ -58,6 +58,14 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Users'],
     }),
+    getEmailConfirmation: builder.query({
+      query: ({ confirmationCode }) => ({
+        url: `${USERS_URL}/confirmation/${confirmationCode}`,
+        params: { confirmationCode },
+        method: 'GET',
+      }),
+      keepUnusedDataFor: 5,
+    }),
   }),
 });
 
@@ -70,4 +78,5 @@ export const {
   useDeleteUserMutation,
   useGetUserDetailsQuery,
   useUpdateUserMutation,
+  useGetEmailConfirmationQuery,
 } = usersApiSlice;

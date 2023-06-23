@@ -53,7 +53,7 @@ const registerUser = asyncHandler(async (req: any, res: any) => {
   });
 
   if (user) {
-    generateToken(res, user._id);
+    //generateToken(res, user._id);
     await sendConfirmationEmail(user.name, user.email, emailToken);
     res.status(201).json({
       message: 'User was registered successfully! please check your email',
@@ -181,12 +181,15 @@ const userVerification = asyncHandler(async (req: any, res: any) => {
 
   if (user) {
     user.status = 'Active';
+    user.confirmationCode = '';
     await user.save();
 
-    return res.status(200).json({ message: 'User registrated' });
+    return res.status(200).json({ message: 'User registered' });
   }
 
-  res.status(404).json({ message: 'Code not found' });
+  res
+    .status(404)
+    .json({ message: 'Code not found or user already registered' });
 });
 
 export {

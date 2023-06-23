@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import FormContainer from '../components/FormContainer';
 import Loader from '../components/Loader';
 import { useRegisterMutation } from '../slices/usersApiSlice';
-import { setCredentials } from '../slices/authSlice';
+//import { setCredentials } from '../slices/authSlice';
 import { toast } from 'react-toastify';
 
 export const RegisterScreen = () => {
@@ -14,16 +14,17 @@ export const RegisterScreen = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [register, { isLoading }] = useRegisterMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  const { search } = useLocation();
-  const sp = new URLSearchParams(search);
-  const redirect = sp.get('redirect') || '/';
+  //const { search } = useLocation();
+  //const sp = new URLSearchParams(search);
+  //const redirect = sp.get('redirect') || '/';
+  const redirect = '/users/confirmation';
 
   useEffect(() => {
     if (userInfo) {
@@ -37,8 +38,8 @@ export const RegisterScreen = () => {
       toast.error('Passwords do not match');
     } else {
       try {
-        const res = await register({ name, email, password }).unwrap();
-        dispatch(setCredentials({ ...res }));
+        await register({ name, email, password }).unwrap();
+        //dispatch(setCredentials({ ...res }));
         navigate(redirect);
       } catch (error) {
         toast.error(error?.data?.message || error.error);
@@ -50,7 +51,7 @@ export const RegisterScreen = () => {
     <FormContainer>
       <h1>Sign Up</h1>
       <Form onSubmit={submitHandler}>
-      <Form.Group controllid="name" className="my-3">
+        <Form.Group controllid="name" className="my-3">
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
