@@ -151,7 +151,13 @@ const OrderScreen = () => {
                 <ListGroup.Item key={index}>
                   <Row>
                     <Col md={1}>
-                      <Image src={item.image} alt={item.name} fluid rounded />
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fluid
+                        rounded
+                        className="img-click"
+                      />
                     </Col>
                     <Col>
                       <Link to={`/product/${item.product}`}>{item.name}</Link>
