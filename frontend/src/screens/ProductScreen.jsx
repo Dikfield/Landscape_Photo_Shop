@@ -25,6 +25,10 @@ import {
 const ProductScreen = () => {
   const { id: productId } = useParams();
 
+  const [imageSrc, setImageSrc] = useState('');
+  const [isImageOne, setIsImageOne] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -47,6 +51,19 @@ const ProductScreen = () => {
   const addToCartHandler = () => {
     dispatch(addToCart({ ...product, qty }));
     navigate('/cart');
+  };
+
+  const handleImageClick = () => {
+    if (isImageOne) {
+      setImageSrc(product.image);
+      setIsFullScreen(false);
+      console.log('full screen off');
+    } else {
+      setImageSrc(product.imageWatermark);
+      setIsFullScreen(true);
+      console.log('full screen true');
+    }
+    setIsImageOne(!isImageOne);
   };
 
   const submitHandler = async (e) => {
@@ -81,13 +98,48 @@ const ProductScreen = () => {
         <>
           <Meta title={product.name} description={product.description} />
           <Row>
-            <Col md={5}>
-              <Image
-                src={product.image}
-                alt={product.name}
-                fluid
-                className="img-click"
-              ></Image>
+            <Col>
+              {' '}
+              {isFullScreen ? (
+                <div
+                  style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: 'black',
+                    zIndex: 9999,
+                  }}
+                  onClick={handleImageClick}
+                >
+                  <Image
+                    src={imageSrc}
+                    alt="Full Screen Image"
+                    style={{
+                      maxWidth: '100%',
+                      maxHeight: '100%',
+                      margin: 'auto',
+                      display: 'block',
+                    }}
+                  />
+                </div>
+              ) : (
+                <>
+                  {' '}
+                  <Button
+                    className="btn-block"
+                    type="button"
+                    onClick={handleImageClick}
+                  >
+                    <Image
+                      src={imageSrc || product.image}
+                      alt={product.name}
+                      fluid
+                    />
+                  </Button>
+                </>
+              )}
             </Col>
             <Col md={4}>
               <ListGroup variant="flush">

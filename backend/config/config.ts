@@ -19,6 +19,9 @@ class Config {
   NODEMAIL_EMAIL: string | undefined;
   NODEMAIL_PASS: string | undefined;
   NODEMAIL_EMAIL_SECRET: string | undefined;
+  CLOUDINARY_NAME: string | undefined;
+  CLOUDINARY_KEY: string | undefined;
+  CLOUDINARY_SECRET: string | undefined;
 
   constructor() {
     this.PORT = process.env.PORT || '';
@@ -36,6 +39,9 @@ class Config {
     this.NODEMAIL_EMAIL = process.env.NODEMAIL_EMAIL || '';
     this.NODEMAIL_PASS = process.env.NODEMAIL_PASS || '';
     this.NODEMAIL_EMAIL_SECRET = process.env.NODEMAIL_EMAIL_SECRET || '';
+    this.CLOUDINARY_NAME = process.env.CLOUDINARY_NAME || '';
+    this.CLOUDINARY_KEY = process.env.CLOUDINARY_KEY || '';
+    this.CLOUDINARY_SECRET = process.env.CLOUDINARY_SECRET || '';
   }
 
   public validationConfig(): void {

@@ -45,6 +45,10 @@ const productSchema =
         type: String,
         required: true,
       },
+      imageWatermark: {
+        type: String,
+        required: true,
+      },
       brand: {
         type: String,
         required: true,

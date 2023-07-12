@@ -15,7 +15,7 @@ const users = [
     password: bcrypt.hashSync('1234', 10),
     status: 'Active',
     isAdmin: false,
-    confirmationCode: 'teste',
+    confirmationCode: 'teste2',
   },
   {
     name: 'Capetita',
@@ -23,7 +23,7 @@ const users = [
     password: bcrypt.hashSync('1234', 10),
     status: 'Active',
     isAdmin: false,
-    confirmationCode: 'teste',
+    confirmationCode: 'teste3',
   },
 ];
 

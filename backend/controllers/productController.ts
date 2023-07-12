@@ -1,6 +1,7 @@
 import asyncHandler from '../middleware/asyncHandler';
 import Product from '../models/productModel';
 import { config } from '../config/config';
+import waterMark from '../utils/watermarkGen';
 
 const getProducts = asyncHandler(async (req: any, res: any) => {
   const pageSize = config.PAGINATION_LIMIT;
@@ -34,7 +35,8 @@ const createProduct = asyncHandler(async (req: any, res: any) => {
     name: 'Sample name',
     price: 0,
     user: req.user._id,
-    image: '/images/sample.jpg',
+    image: '../images/sample.jpg',
+    imageWatermark: '../images/sample.jpg',
     brand: 'Sample brand',
     category: 'Sample category',
     countInStock: 0,
@@ -57,11 +59,13 @@ const updateProduct = asyncHandler(async (req: any, res: any) => {
       (product.price = price),
       (product.description = description),
       (product.image = image),
+      (product.imageWatermark = image.replace('/uploads', '/watermark/uploads')),
       (product.brand = brand),
       (product.category = category),
       (product.countInStock = countInStock);
 
     const updatedProduct = await product.save();
+
     res.json(updatedProduct);
   } else {
     res.status(404);

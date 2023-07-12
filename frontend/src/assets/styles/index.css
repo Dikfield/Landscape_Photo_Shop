@@ -52,9 +52,21 @@ table th {
   background: rgba(0, 0, 0, 0.5);
 }
 
-@media screen and (min-width:901px) {
+@media screen and (min-width: 901px) {
   .img-click {
-      pointer-events: none;
+    pointer-events: none;
     -webkit-touch-callout: none;
   }
-  }
+}
+.imgLink {
+  border: none;
+  background: none;
+}
+.imgLink img {
+  width: 100%;
+  height: auto;
+}
+.imgLink:hover img {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}

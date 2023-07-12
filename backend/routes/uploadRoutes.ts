@@ -1,6 +1,8 @@
 import path from 'path';
 import express from 'express';
 import multer from 'multer';
+import waterMark from '../utils/watermarkGen';
+
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -33,14 +35,21 @@ const upload = multer({ storage, fileFilter });
 const uploadSingleImage = upload.single('image');
 
 router.post('/', (req: any, res: any) => {
-  uploadSingleImage(req, res, function (err) {
+  uploadSingleImage(req, res, async function (err) {
     if (err) {
       res.status(400).send({ message: err.message });
     }
 
+    await waterMark(
+      req.file.path,
+      req.file.fieldname,
+      req.file.originalname,
+    );
+
     res.status(200).send({
       message: 'Image uploaded successfully',
       image: `/${req.file.path}`,
+
     });
   });
 });
