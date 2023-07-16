@@ -1,5 +1,6 @@
 import asyncHandler from '../middleware/asyncHandler';
 import Order from '../models/orderModel';
+import UserModel from '../models/userModel';
 
 const addOrderItems = asyncHandler(async (req: any, res: any) => {
   const {
@@ -59,6 +60,8 @@ const getOrderbyId = asyncHandler(async (req: any, res: any) => {
 const updateOrderToPay = asyncHandler(async (req: any, res: any) => {
   const order = await Order.findById(req.params.id);
 
+  const user = await UserModel.findById(order?.user);
+
   const now = new Date();
 
   if (order) {
@@ -71,6 +74,12 @@ const updateOrderToPay = asyncHandler(async (req: any, res: any) => {
       email_address: req.body.payer.email_address,
     };
 
+    if (user) {
+      for (const item of order.orderItems) {
+        user.buyedPhotos.push(item.image);
+      }
+      await user.save();
+    }
     const updatedOrder = await order.save();
 
     res.status(200).json(updatedOrder);

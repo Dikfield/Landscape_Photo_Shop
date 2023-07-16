@@ -8,6 +8,7 @@ interface IUserDocument extends Document {
   isAdmin: boolean;
   status: string;
   confirmationCode: string;
+  buyedPhotos: string[];
 }
 
 export interface IUser extends IUserDocument {
@@ -43,6 +44,7 @@ const userSchema = new Schema<IUser, IUserDocument>(
       type: String,
       unique: true,
     },
+    buyedPhotos: [],
   },
   {
     timestamps: true,

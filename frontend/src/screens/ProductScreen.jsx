@@ -36,6 +36,8 @@ const ProductScreen = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
 
+  const { userInfo } = useSelector((state) => state.auth);
+
   const {
     data: product,
     isLoading,
@@ -46,19 +48,23 @@ const ProductScreen = () => {
   const [createReview, { isLoading: loadingProductReview }] =
     useCreateReviewMutation();
 
-  const { userInfo } = useSelector((state) => state.auth);
-
   const addToCartHandler = () => {
     dispatch(addToCart({ ...product, qty }));
     navigate('/cart');
   };
 
   const handleImageClick = () => {
+    const photo = userInfo.buyedPhotos.filter((i) => i === product.image);
+    const buyed = photo[0] === product.image;
     if (isImageOne) {
       setImageSrc(product.image);
       setIsFullScreen(false);
     } else {
-      setImageSrc(product.imageWatermark);
+      if (buyed || userInfo.isAdmin) {
+        setImageSrc(product.image);
+      } else {
+        setImageSrc(product.imageWatermark);
+      }
       setIsFullScreen(true);
     }
     setIsImageOne(!isImageOne);
@@ -120,6 +126,7 @@ const ProductScreen = () => {
                       margin: 'auto',
                       display: 'block',
                     }}
+                    className="img-click"
                   />
                 </div>
               ) : (
@@ -134,6 +141,7 @@ const ProductScreen = () => {
                       src={imageSrc || product.image}
                       alt={product.name}
                       fluid
+                      className="img-click"
                     />
                   </Button>
                 </>
