@@ -9,7 +9,7 @@ cloudinary.v2.config({
 
 const uploadCloud = async (filePath: any) => {
   return await cloudinary.v2.uploader
-    .upload(filePath, { transformation: [{ width: 0.5 }] })
+    .upload(filePath) //, { transformation: [{ width: 1 }] }
     .then((result) => result.secure_url);
 };
 
