@@ -57,11 +57,9 @@ const ProductScreen = () => {
     if (isImageOne) {
       setImageSrc(product.image);
       setIsFullScreen(false);
-      console.log('full screen off');
     } else {
       setImageSrc(product.imageWatermark);
       setIsFullScreen(true);
-      console.log('full screen true');
     }
     setIsImageOne(!isImageOne);
   };

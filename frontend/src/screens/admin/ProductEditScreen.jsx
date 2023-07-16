@@ -19,6 +19,7 @@ const ProductEditScreen = () => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
+  const [imageWatermark, setImageWatermark] = useState('');
   const [brand, setBrand] = useState('');
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState('');
@@ -42,6 +43,7 @@ const ProductEditScreen = () => {
       setName(product.name);
       setPrice(product.price);
       setImage(product.image);
+      setImageWatermark(product.imageWatermark);
       setBrand(product.brand);
       setCategory(product.category);
       setCountInStock(product.countInStock);
@@ -57,6 +59,7 @@ const ProductEditScreen = () => {
         name,
         price,
         image,
+        imageWatermark,
         brand,
         category,
         description,
@@ -77,6 +80,7 @@ const ProductEditScreen = () => {
       const res = await uploadProductImage(formData).unwrap();
       toast.success(res.message);
       setImage(res.image);
+      setImageWatermark(res.imageWatermark);
     } catch (error) {
       toast.error(error?.data?.message || error.error);
     }

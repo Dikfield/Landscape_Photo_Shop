@@ -1,6 +1,7 @@
 import path from 'path';
 import express from 'express';
 import multer from 'multer';
+import uploadCloud from '../utils/cloudinary';
 import waterMark from '../utils/watermarkGen';
 
 const router = express.Router();
@@ -40,16 +41,19 @@ router.post('/', (req: any, res: any) => {
       res.status(400).send({ message: err.message });
     }
 
-    await waterMark(
-      req.file.path,
-      req.file.fieldname,
-      req.file.originalname,
-    );
+    const { path } = req.file;
+
+    const watermarkPath = await waterMark(path);
+
+    const uploader = async (path: any) => await uploadCloud(path);
+
+    const newPath = await uploader(path);
+    const newWatermarkPath = await uploader(watermarkPath);
 
     res.status(200).send({
       message: 'Image uploaded successfully',
-      image: `/${req.file.path}`,
-
+      image: newPath,
+      imageWatermark: newWatermarkPath,
     });
   });
 });
