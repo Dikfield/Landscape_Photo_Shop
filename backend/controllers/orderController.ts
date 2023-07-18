@@ -1,6 +1,8 @@
+import Product from '../models/productModel';
 import asyncHandler from '../middleware/asyncHandler';
 import Order from '../models/orderModel';
 import UserModel from '../models/userModel';
+import { productInterface } from '../interfaces/productInterface';
 
 const addOrderItems = asyncHandler(async (req: any, res: any) => {
   const {
@@ -62,6 +64,14 @@ const updateOrderToPay = asyncHandler(async (req: any, res: any) => {
 
   const user = await UserModel.findById(order?.user);
 
+  const products = [];
+
+  if (order) {
+    for (const item of order.orderItems) {
+      products.push(await Product.findById(item.product));
+    }
+  }
+
   const now = new Date();
 
   if (order) {
@@ -74,9 +84,20 @@ const updateOrderToPay = asyncHandler(async (req: any, res: any) => {
       email_address: req.body.payer.email_address,
     };
 
-    if (user) {
-      for (const item of order.orderItems) {
-        user.buyedPhotos.push(item.image);
+    if (user && products) {
+      for (const item of products) {
+        if (item) {
+          const payedProduct: productInterface = {
+            productId: item._id.toString(),
+            name: item.name,
+            image: item.image,
+            imageWatermark: item.imageWatermark,
+            brand: item.brand,
+            category: item.category,
+            description: item.description,
+          };
+          user.products.push(payedProduct);
+        }
       }
       await user.save();
     }

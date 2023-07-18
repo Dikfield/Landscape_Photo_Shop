@@ -23,7 +23,7 @@ const authUser = asyncHandler(async (req: any, res: any) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      buyedPhotos: user.buyedPhotos,
+      products: user.products,
     });
   } else {
     res.status(401);

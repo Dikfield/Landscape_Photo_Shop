@@ -54,13 +54,15 @@ const ProductScreen = () => {
   };
 
   const handleImageClick = () => {
-    const photo = userInfo.buyedPhotos.filter((i) => i === product.image);
-    const buyed = photo[0] === product.image;
+    const payedProduct = userInfo.products.find(
+      (p) => p.productId === product._id,
+    );
+
     if (isImageOne) {
       setImageSrc(product.image);
       setIsFullScreen(false);
     } else {
-      if (buyed || userInfo.isAdmin) {
+      if (userInfo.isAdmin || payedProduct?.image) {
         setImageSrc(product.image);
       } else {
         setImageSrc(product.imageWatermark);
