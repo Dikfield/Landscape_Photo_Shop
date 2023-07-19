@@ -4,7 +4,7 @@ async function waterMark(file: any) {
   // reads the image
   const image = await Jimp.read(file);
   // reads the watermark image
-  let watermark = await Jimp.read('images/watermark_cover.jpg');
+  let watermark = await Jimp.read('images/watermark.jpg');
   // resizes the watermark image
   watermark = watermark.resize(image.bitmap.width, image.bitmap.height);
   //adds the watermark to the image at point 0, 0

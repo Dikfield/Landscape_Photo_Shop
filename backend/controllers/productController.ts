@@ -20,8 +20,20 @@ const getProducts = asyncHandler(async (req: any, res: any) => {
 });
 
 const getProductById = asyncHandler(async (req: any, res: any) => {
-  const product = await Product.findById(req.params.id)
-    .select('-imageMedium -imageLarge');
+  const product = await Product.findById(req.params.id).select(
+    '-imageMedium -imageLarge',
+  );
+
+  if (product) {
+    return res.json(product);
+  } else {
+    res.status(404);
+    throw new Error('Resource not found');
+  }
+});
+
+const getHidenProductById = asyncHandler(async (req: any, res: any) => {
+  const product = await Product.findById(req.params.id);
 
   if (product) {
     return res.json(product);
@@ -143,11 +155,9 @@ const createProductReview = asyncHandler(async (req: any, res: any) => {
 });
 
 const getTopProducts = asyncHandler(async (req: any, res: any) => {
-  const products = await Product.find({})
-    .sort({ rating: -1 })
-    .limit(3);
-    //.select('-imageMedium')
-    //.select('-imageLarge');
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+  //.select('-imageMedium')
+  //.select('-imageLarge');
 
   res.status(200).json(products);
 });
@@ -160,4 +170,5 @@ export {
   deleteProduct,
   createProductReview,
   getTopProducts,
+  getHidenProductById,
 };

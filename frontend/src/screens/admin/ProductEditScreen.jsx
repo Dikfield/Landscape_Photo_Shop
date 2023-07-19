@@ -7,7 +7,7 @@ import Loader from '../../components/Loader';
 import { toast } from 'react-toastify';
 import {
   useUpdateProductMutation,
-  useGetProductDetailsQuery,
+  useGetHidenProductDetailsQuery,
   useUploadProductImageMutation,
 } from '../../slices/productsApiSlice';
 
@@ -19,6 +19,8 @@ const ProductEditScreen = () => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [imageSmall, setImageSmall] = useState('');
+  const [imageMedium, setImageMedium] = useState('');
+  const [imageLarge, setImageLarge] = useState('');
   const [imageWatermark, setImageWatermark] = useState('');
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
@@ -31,7 +33,7 @@ const ProductEditScreen = () => {
     isLoading,
     refetch,
     error,
-  } = useGetProductDetailsQuery(productId);
+  } = useGetHidenProductDetailsQuery(productId);
 
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
@@ -44,6 +46,8 @@ const ProductEditScreen = () => {
       setName(product.name);
       setPrice(product.price);
       setImageSmall(product.imageSmall);
+      setImageMedium(product.imageMedium);
+      setImageLarge(product.imageLarge);
       setImageWatermark(product.imageWatermark);
       setCountry(product.country);
       setCity(product.city);
@@ -61,6 +65,8 @@ const ProductEditScreen = () => {
         name,
         price,
         imageSmall,
+        imageMedium,
+        imageLarge,
         imageWatermark,
         country,
         city,
@@ -83,6 +89,8 @@ const ProductEditScreen = () => {
       const res = await uploadProductImage(formData).unwrap();
       toast.success(res.message);
       setImageSmall(res.imageSmall);
+      setImageMedium(res.imageMedium);
+      setImageLarge(res.imageLarge);
       setImageWatermark(res.imageWatermark);
     } catch (error) {
       toast.error(error?.data?.message || error.error);

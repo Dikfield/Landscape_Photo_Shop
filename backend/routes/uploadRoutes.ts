@@ -41,20 +41,32 @@ router.post('/', (req: any, res: any) => {
       res.status(400).send({ message: err.message });
     }
 
-    const { path } = req.file;
+    const { path, size } = req.file;
 
     const watermarkPath = await waterMark(path);
 
-    const uploader = async (path: any) => await uploadCloud(path);
+    const uploader = async (path: any, size: number, sizeConfig: any) =>
+      await uploadCloud(path, size, sizeConfig);
 
-    const newPath = await uploader(path);
-    const newWatermarkPath = await uploader(watermarkPath);
+    try {
+      const imageSmall = await uploader(path, size, 0.3);
+      const imageMedium = await uploader(path, size, 0.5);
+      const imageLarge = await uploader(path, size, 'iw');
+      const newWatermarkPath = await uploader(watermarkPath, size, 'iw');
 
-    res.status(200).send({
-      message: 'Image uploaded successfully',
-      image: newPath,
-      imageWatermark: newWatermarkPath,
-    });
+      res.status(200).send({
+        message: 'Image uploaded successfully',
+        imageSmall,
+        imageMedium,
+        imageLarge,
+        imageWatermark: newWatermarkPath,
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(500).send({
+        message: e,
+      });
+    }
   });
 });
 

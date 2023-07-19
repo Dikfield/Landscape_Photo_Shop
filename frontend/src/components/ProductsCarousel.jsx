@@ -20,6 +20,8 @@ const ProductsCarousel = () => {
               src={product.imageSmall}
               alt={product.name}
               fluid
+              height={720}
+              width={720}
               className="img-click"
             />
             <Carousel.Caption className="carousel-caption">

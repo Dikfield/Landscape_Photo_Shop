@@ -19,6 +19,13 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    getHidenProductDetails: builder.query({
+      query: (productId) => ({
+        url: `${PRODUCTS_URL}/hiden/${productId}`,
+        method: 'GET',
+      }),
+      keepUnusedDataFor: 5,
+    }),
     createProduct: builder.mutation({
       query: () => ({
         url: PRODUCTS_URL,
@@ -73,4 +80,5 @@ export const {
   useDeleteProductMutation,
   useCreateReviewMutation,
   useGetTopProductsQuery,
+  useGetHidenProductDetailsQuery
 } = productsApiSlice;
