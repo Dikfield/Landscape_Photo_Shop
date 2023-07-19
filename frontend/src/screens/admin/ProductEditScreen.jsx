@@ -18,12 +18,13 @@ const ProductEditScreen = () => {
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
-  const [image, setImage] = useState('');
+  const [imageSmall, setImageSmall] = useState('');
   const [imageWatermark, setImageWatermark] = useState('');
-  const [brand, setBrand] = useState('');
-  const [category, setCategory] = useState('');
+  const [country, setCountry] = useState('');
+  const [city, setCity] = useState('');
   const [countInStock, setCountInStock] = useState('');
   const [description, setDescription] = useState('');
+  const [tags, setTags] = useState('');
 
   const {
     data: product,
@@ -42,12 +43,13 @@ const ProductEditScreen = () => {
     if (product) {
       setName(product.name);
       setPrice(product.price);
-      setImage(product.image);
+      setImageSmall(product.imageSmall);
       setImageWatermark(product.imageWatermark);
-      setBrand(product.brand);
-      setCategory(product.category);
+      setCountry(product.country);
+      setCity(product.city);
       setCountInStock(product.countInStock);
       setDescription(product.description);
+      setTags(product.tags);
     }
   }, [product]);
 
@@ -58,12 +60,13 @@ const ProductEditScreen = () => {
         productId,
         name,
         price,
-        image,
+        imageSmall,
         imageWatermark,
-        brand,
-        category,
+        country,
+        city,
         description,
         countInStock,
+        tags,
       });
       toast.success('Product updated');
       refetch();
@@ -79,7 +82,7 @@ const ProductEditScreen = () => {
     try {
       const res = await uploadProductImage(formData).unwrap();
       toast.success(res.message);
-      setImage(res.image);
+      setImageSmall(res.imageSmall);
       setImageWatermark(res.imageWatermark);
     } catch (error) {
       toast.error(error?.data?.message || error.error);
@@ -126,8 +129,8 @@ const ProductEditScreen = () => {
               <Form.Control
                 type="text"
                 placeholder="Enter image url"
-                value={image}
-                onChange={(e) => setImage}
+                value={imageSmall}
+                onChange={(e) => setImageSmall}
               ></Form.Control>
               <Form.Control
                 type="file"
@@ -137,13 +140,13 @@ const ProductEditScreen = () => {
               {loadingUpload && <Loader />}
             </Form.Group>
 
-            <Form.Group controlId="brand" className="my-2">
-              <Form.Label>Brand</Form.Label>
+            <Form.Group controlId="country" className="my-2">
+              <Form.Label>Country</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter brand"
-                value={brand}
-                onChange={(e) => setBrand(e.target.value)}
+                placeholder="Enter country"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
@@ -157,23 +160,37 @@ const ProductEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="category" className="my-2">
-              <Form.Label>Category</Form.Label>
+            <Form.Group controlId="city" className="my-2">
+              <Form.Label>City</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter category"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
             <Form.Group controlId="description" className="my-2">
               <Form.Label>Description</Form.Label>
               <Form.Control
+                as="textarea"
+                rows={3}
                 type="text"
                 placeholder="Enter a description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="tags" className="my-2 lg">
+              <Form.Label>Tags</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                type="text"
+                placeholder="Enter a description"
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
               ></Form.Control>
             </Form.Group>
 

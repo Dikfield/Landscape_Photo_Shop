@@ -1,9 +1,12 @@
 export interface productInterface {
   productId: string;
   name: string;
-  image: string;
+  imageSmall: string;
+  imageMedium: string;
+  imageLarge: string;
   imageWatermark: string;
-  brand: string;
-  category: string;
+  country: string;
+  city: string;
   description: string;
+  tags: string;
 }

@@ -75,7 +75,7 @@ const updateOrderToPay = asyncHandler(async (req: any, res: any) => {
   const now = new Date();
 
   if (order) {
-    order.isPaid = true; 
+    order.isPaid = true;
     order.paidAt = now;
     order.paymentResult = {
       id: req.body.id,
@@ -83,17 +83,19 @@ const updateOrderToPay = asyncHandler(async (req: any, res: any) => {
       update_time: req.body.update_time,
       email_address: req.body.payer.email_address,
     };
-    
 
     for (const item of products) {
       if (item) {
         const payedProduct: productInterface = {
           productId: item._id.toString(),
           name: item.name,
-          image: item.image,
+          imageSmall: item.imageSmall,
+          imageMedium: item.imageMedium,
+          imageLarge: item.imageLarge,
           imageWatermark: item.imageWatermark,
-          brand: item.brand,
-          category: item.category,
+          country: item.country,
+          city: item.city,
+          tags: item.tags,
           description: item.description,
         };
         user?.products.push(payedProduct);

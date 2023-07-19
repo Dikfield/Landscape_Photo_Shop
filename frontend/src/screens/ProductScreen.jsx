@@ -59,11 +59,11 @@ const ProductScreen = () => {
     );
 
     if (isImageOne) {
-      setImageSrc(product.image);
+      setImageSrc(product.imageSmall);
       setIsFullScreen(false);
     } else {
-      if (userInfo.isAdmin || payedProduct?.image) {
-        setImageSrc(product.image);
+      if (userInfo.isAdmin || payedProduct?.imageSmall) {
+        setImageSrc(product.imageSmall);
       } else {
         setImageSrc(product.imageWatermark);
       }
@@ -140,7 +140,7 @@ const ProductScreen = () => {
                     onClick={handleImageClick}
                   >
                     <Image
-                      src={imageSrc || product.image}
+                      src={imageSrc || product.imageSmall}
                       alt={product.name}
                       fluid
                       className="img-click"

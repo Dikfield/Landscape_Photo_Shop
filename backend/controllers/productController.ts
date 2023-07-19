@@ -14,12 +14,14 @@ const getProducts = asyncHandler(async (req: any, res: any) => {
 
   const products = await Product.find({ ...keyword })
     .limit(pageSize)
-    .skip(pageSize * (page - 1));
+    .skip(pageSize * (page - 1))
+    .select('-imageMedium -imageLarge');
   res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
 const getProductById = asyncHandler(async (req: any, res: any) => {
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.params.id)
+    .select('-imageMedium -imageLarge');
 
   if (product) {
     return res.json(product);
@@ -34,13 +36,16 @@ const createProduct = asyncHandler(async (req: any, res: any) => {
     name: 'Sample name',
     price: 0,
     user: req.user._id,
-    image: '../images/sample.jpg',
+    imageSmall: '../images/sample.jpg',
+    imageMedium: '../images/sample.jpg',
+    imageLarge: '../images/sample.jpg',
     imageWatermark: '../images/sample.jpg',
-    brand: 'Sample brand',
-    category: 'Sample category',
+    country: 'Sample brand',
+    city: 'Sample category',
     countInStock: 0,
     numReviews: 0,
     description: 'Sample description',
+    tags: 'Sample description',
   });
 
   const createdProduct = await product.save();
@@ -52,11 +57,14 @@ const updateProduct = asyncHandler(async (req: any, res: any) => {
     name,
     price,
     description,
-    image,
+    imageSmall,
+    imageMedium,
+    imageLarge,
     imageWatermark,
-    brand,
-    category,
+    country,
+    city,
     countInStock,
+    tags,
   } = req.body;
 
   const product = await Product.findById(req.params.id);
@@ -65,11 +73,14 @@ const updateProduct = asyncHandler(async (req: any, res: any) => {
     (product.name = name),
       (product.price = price),
       (product.description = description),
-      (product.image = image),
+      (product.imageSmall = imageSmall),
+      (product.imageMedium = imageMedium),
+      (product.imageLarge = imageLarge),
       (product.imageWatermark = imageWatermark),
-      (product.brand = brand),
-      (product.category = category),
-      (product.countInStock = countInStock);
+      (product.country = country),
+      (product.city = city),
+      (product.countInStock = countInStock),
+      (product.tags = tags);
 
     const updatedProduct = await product.save();
 
@@ -132,7 +143,11 @@ const createProductReview = asyncHandler(async (req: any, res: any) => {
 });
 
 const getTopProducts = asyncHandler(async (req: any, res: any) => {
-  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+  const products = await Product.find({})
+    .sort({ rating: -1 })
+    .limit(3);
+    //.select('-imageMedium')
+    //.select('-imageLarge');
 
   res.status(200).json(products);
 });

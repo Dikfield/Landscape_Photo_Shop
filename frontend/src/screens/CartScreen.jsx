@@ -47,7 +47,7 @@ const CartScreen = () => {
                 <Row>
                   <Col md={2}>
                     <Image
-                      src={item.image}
+                      src={item.imageSmall}
                       alt={item.name}
                       fluid
                       rounded

@@ -41,7 +41,15 @@ const productSchema =
         type: String,
         required: true,
       },
-      image: {
+      imageSmall: {
+        type: String,
+        required: true,
+      },
+      imageMedium: {
+        type: String,
+        required: true,
+      },
+      imageLarge: {
         type: String,
         required: true,
       },
@@ -49,15 +57,19 @@ const productSchema =
         type: String,
         required: true,
       },
-      brand: {
+      country: {
         type: String,
         required: true,
       },
-      category: {
+      city: {
         type: String,
         required: true,
       },
       description: {
+        type: String,
+        required: true,
+      },
+      tags: {
         type: String,
         required: true,
       },

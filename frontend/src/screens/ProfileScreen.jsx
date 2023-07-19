@@ -191,14 +191,14 @@ const ProfileScreen = () => {
                 <tr key={product._id}>
                   <td>{product.name}</td>
                   <td>
-                    <a href={product.image}>
+                    <a href={product.imageSmall}>
                       <Button className="btn-sm" variant="light">
                         Link
                       </Button>
                     </a>
                   </td>
-                  <td>{product.brand}</td>
-                  <td>{product.category}</td>
+                  <td>{product.country}</td>
+                  <td>{product.city}</td>
                   <td>{product.description}</td>
                   <td>
                     <LinkContainer to={`/product/${product.productId}`}>

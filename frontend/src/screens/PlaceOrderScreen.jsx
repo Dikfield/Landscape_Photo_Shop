@@ -73,7 +73,7 @@ const PlaceOrderScreen = () => {
                       <Row>
                         <Col md={1}>
                           <Image
-                            src={item.image}
+                            src={item.imageSmall}
                             alt={item.name}
                             fluid
                             rounded
