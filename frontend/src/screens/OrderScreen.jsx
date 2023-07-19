@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Row, Col, ListGroup, Image, Button, Card } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -12,8 +12,12 @@ import {
   useGetPayPalClientIdQuery,
   useDeliverOrderMutation,
 } from '../slices/ordersSliceApi';
+import { useGetUserProfileQuery } from '../slices/usersApiSlice';
+import { setCredentials } from '../slices/authSlice';
 
 const OrderScreen = () => {
+  const dispatch = useDispatch();
+
   const { id: orderId } = useParams();
   const {
     data: order,
@@ -37,6 +41,10 @@ const OrderScreen = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
 
+  const { data: profile, refetch: refetchProfile } = useGetUserProfileQuery(
+    userInfo._id,
+  );
+
   useEffect(() => {
     if (!errorPayPal && !loadingPayPal && paypal.clientId) {
       const loadPayPalScript = async () => {
@@ -59,8 +67,10 @@ const OrderScreen = () => {
     return actions.order.capture().then(async function (details) {
       try {
         await payOrder({ orderId, details });
-        refetch();
         toast.success('Payment successful');
+        await refetch();
+        const pro = await refetchProfile();
+        dispatch(setCredentials({ ...pro.data }));
       } catch (err) {
         toast.error(err?.data?.message || err.message);
       }

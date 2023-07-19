@@ -75,7 +75,7 @@ const updateOrderToPay = asyncHandler(async (req: any, res: any) => {
   const now = new Date();
 
   if (order) {
-    order.isPaid = true;
+    order.isPaid = true; 
     order.paidAt = now;
     order.paymentResult = {
       id: req.body.id,
@@ -83,24 +83,23 @@ const updateOrderToPay = asyncHandler(async (req: any, res: any) => {
       update_time: req.body.update_time,
       email_address: req.body.payer.email_address,
     };
+    
 
-    if (user && products) {
-      for (const item of products) {
-        if (item) {
-          const payedProduct: productInterface = {
-            productId: item._id.toString(),
-            name: item.name,
-            image: item.image,
-            imageWatermark: item.imageWatermark,
-            brand: item.brand,
-            category: item.category,
-            description: item.description,
-          };
-          user.products.push(payedProduct);
-        }
+    for (const item of products) {
+      if (item) {
+        const payedProduct: productInterface = {
+          productId: item._id.toString(),
+          name: item.name,
+          image: item.image,
+          imageWatermark: item.imageWatermark,
+          brand: item.brand,
+          category: item.category,
+          description: item.description,
+        };
+        user?.products.push(payedProduct);
       }
-      await user.save();
     }
+    await user?.save();
     const updatedOrder = await order.save();
 
     res.status(200).json(updatedOrder);

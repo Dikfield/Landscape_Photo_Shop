@@ -20,13 +20,15 @@ router.route('/logout').post(logoutUser);
 router.route('/login').post(authUser);
 router
   .route('/profile')
-  .get(protect, getUserProfile)
+  .get(protect, getUserProfile)  
   .put(protect, updateUserProfile);
 router
   .route('/:id')
   .delete(protect, admin, deleteUser)
   .get(protect, admin, getUserById)
   .put(protect, admin, updateUser);
+
+router.route('/profile/:id').get(protect, getUserProfile);
 
 router.get('/confirmation/:confirmationCode', userVerification);
 

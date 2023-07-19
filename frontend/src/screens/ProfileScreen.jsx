@@ -6,7 +6,10 @@ import { toast } from 'react-toastify';
 import { FaTimes } from 'react-icons/fa';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { useProfileMutation } from '../slices/usersApiSlice';
+import {
+  useProfileMutation,
+  useGetUserProfileQuery,
+} from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
 import { useGetMyOrdersQuery } from '../slices/ordersSliceApi';
 
@@ -19,6 +22,12 @@ const ProfileScreen = () => {
   const dispatch = useDispatch();
 
   const { userInfo } = useSelector((state) => state.auth);
+
+  const {
+    data: profile,
+    isLoading: productsLoading,
+    error: productsError,
+  } = useGetUserProfileQuery(userInfo._id);
 
   const [updateProfile, { isLoading: loadingUpdateProfile }] =
     useProfileMutation();
@@ -145,7 +154,57 @@ const ProfileScreen = () => {
                   </td>
                   <td>
                     <LinkContainer to={`/order/${order._id}`}>
-                      <Button className="btn-sm" variant="light">Detais</Button>
+                      <Button className="btn-sm" variant="light">
+                        Detais
+                      </Button>
+                    </LinkContainer>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        )}
+      </Col>
+      <Col md={3}></Col>
+      <Col md={9}>
+        <h2>My Products</h2>
+        {productsLoading ? (
+          <Loader />
+        ) : productsError ? (
+          <Message variant="danger">
+            {productsError?.data?.message || productsError.error}
+          </Message>
+        ) : (
+          <Table striped hover responsive className="table-sm">
+            <thead>
+              <tr>
+                <th>CITY</th>
+                <th>IMAGE</th>
+                <th>COUNTRY</th>
+                <th>CATEGORY</th>
+                <th>DESCRIPTION</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {profile.products.map((product) => (
+                <tr key={product._id}>
+                  <td>{product.name}</td>
+                  <td>
+                    <a href={product.image}>
+                      <Button className="btn-sm" variant="light">
+                        Link
+                      </Button>
+                    </a>
+                  </td>
+                  <td>{product.brand}</td>
+                  <td>{product.category}</td>
+                  <td>{product.description}</td>
+                  <td>
+                    <LinkContainer to={`/product/${product.productId}`}>
+                      <Button className="btn-sm" variant="light">
+                        Detais
+                      </Button>
                     </LinkContainer>
                   </td>
                 </tr>
